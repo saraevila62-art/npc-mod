@@ -50,7 +50,7 @@ public class YandereAddon {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            event.accept(YUNO_SPAWN_EGG);
+            event.accept(YUNO_SPAWN_EGG.get());
         }
     }
 
