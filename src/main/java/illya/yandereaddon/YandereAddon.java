@@ -5,6 +5,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
@@ -41,8 +43,15 @@ public class YandereAddon {
     public YandereAddon(IEventBus modEventBus, ModContainer modContainer) {
         ENTITIES.register(modEventBus);
         ITEMS.register(modEventBus);
+        modEventBus.addListener(this::addCreative);
         NeoForge.EVENT_BUS.addListener(this::onAddReloadListeners);
         modEventBus.addListener(this::onEntityAttributes);
+    }
+
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(YUNO_SPAWN_EGG);
+        }
     }
 
     private void onEntityAttributes(EntityAttributeCreationEvent event) {
